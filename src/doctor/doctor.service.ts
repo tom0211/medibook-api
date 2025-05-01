@@ -32,7 +32,16 @@ export class DoctorService {
     doctor.bio = createDoctorDto.bio;
     doctor.user = user;
     doctor.createdById = createdById;
-    return await this.doctorRepository.save(doctor);
+    const createdDoctor = await this.doctorRepository.save(doctor);
+
+    return {
+      ...createdDoctor,
+      user: {
+        id: createdDoctor.user.id,
+        email: createdDoctor.user.email,
+        role: createdDoctor.user.role,
+      },
+    };
   }
 
   async getAllDoctors() {
