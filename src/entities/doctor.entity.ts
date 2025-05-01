@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -41,6 +42,13 @@ export class Doctor {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @ManyToOne(() => User, { nullable: true })
+  @JoinColumn({ name: 'createdById' })
+  createdBy?: User;
+
+  @Column({ nullable: true })
+  createdById?: string;
 
   @UpdateDateColumn()
   updatedAt: Date;

@@ -15,7 +15,7 @@ export class DoctorService {
     private readonly passwordService: PasswordService,
   ) {}
 
-  async createDoctor(createDoctorDto: CreateDoctorDto) {
+  async createDoctor(createDoctorDto: CreateDoctorDto, createdById: string) {
     const passwordHash = await this.passwordService.hashPassword(
       createDoctorDto.user.password,
     );
@@ -31,6 +31,7 @@ export class DoctorService {
     doctor.location = createDoctorDto.location;
     doctor.bio = createDoctorDto.bio;
     doctor.user = user;
+    doctor.createdById = createdById;
     return await this.doctorRepository.save(doctor);
   }
 
