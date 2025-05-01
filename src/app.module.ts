@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './database-config/database-config.module';
 import { SeedSuperadminService } from './seed/SeedSuperadmin.service';
 import { AuthModule } from './auth/auth.module';
+import { DoctorModule } from './doctor/doctor.module';
+import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     DatabaseConfigModule,
     AuthModule,
+    DoctorModule,
+    PatientModule,
   ],
   controllers: [AppController],
   providers: [AppService, SeedSuperadminService],
