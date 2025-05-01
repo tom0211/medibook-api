@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './database-config/database-config.module';
 import { SeedSuperadminService } from './seed/SeedSuperadmin.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { SeedSuperadminService } from './seed/SeedSuperadmin.service';
       isGlobal: true,
     }),
     DatabaseConfigModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, SeedSuperadminService],
