@@ -21,7 +21,19 @@ export class Doctor {
   lastName: string;
 
   @Column({ nullable: true })
-  dateOfBirth: Date;
+  dateOfBirth?: Date;
+
+  @Column('text', { array: true, nullable: true })
+  specializations?: string[];
+
+  @Column('text', { nullable: true })
+  availableDaysTimes?: string;
+
+  @Column({ nullable: true })
+  location?: string;
+
+  @Column('text', { nullable: true })
+  bio?: string;
 
   @OneToOne(() => User, (user) => user.doctorProfile, { onDelete: 'CASCADE' })
   @JoinColumn()
