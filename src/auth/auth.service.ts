@@ -12,21 +12,23 @@ export class AuthService {
     private passwordService: PasswordService,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
+  async validateUser(email: string, pass: string) {
     const user = await this.userService.findByEmail(email);
+    if (!user) return null;
 
-    if (
-      user &&
-      (await this.passwordService.verifyPassword(pass, user.password))
-    ) {
-      //   const { password, ...result } = user;
-      const { ...result } = user;
-      return result;
-    }
-    return null;
+    const passwordValid = await this.passwordService.verifyPassword(
+      pass,
+      user.password,
+    );
+
+    if (!passwordValid) return null;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...result } = user;
+    return result;
   }
 
-  login(user: User) {
+  login(user: Omit<User, 'password'>) {
     const payload = { email: user.email, sub: user.id, role: user.role };
     return {
       access_token: this.jwtService.sign(payload),
