@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserModule } from 'src/user/user.module';
 import { JwtStatergy } from './jwt.statergy';
+import { PasswordService } from './password.service';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { JwtStatergy } from './jwt.statergy';
     }),
     UserModule,
   ],
-  providers: [AuthService, JwtStatergy],
+  providers: [AuthService, JwtStatergy, PasswordService],
   controllers: [AuthController],
+  exports: [PasswordService],
 })
 export class AuthModule {}
