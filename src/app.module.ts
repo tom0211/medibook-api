@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, OnApplicationBootstrap } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfigModule } from './database-config/database-config.module';
+import { SeedSuperadminService } from './seed/SeedSuperadmin.service';
 
 @Module({
   imports: [
@@ -13,6 +14,12 @@ import { DatabaseConfigModule } from './database-config/database-config.module';
     DatabaseConfigModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SeedSuperadminService],
 })
-export class AppModule {}
+export class AppModule implements OnApplicationBootstrap {
+  constructor(private readonly seedSuperadminService: SeedSuperadminService) {}
+
+  async onApplicationBootstrap() {
+    await this.seedSuperadminService.seed();
+  }
+}
